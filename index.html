@@ -87,9 +87,13 @@ body {
   column-gap: 4px;
   max-width: 1000px;
   margin: 0 auto;
-  margin-top: 40px
+  margin-top: 40px;
+        opacity: 0;
+  transition: opacity 0.6s ease;
 }
-
+.gallery.show {
+  opacity: 1;
+}
 .gallery img {
   width: 100%;
   height: auto;
@@ -183,20 +187,42 @@ body {
     <img src="" alt="Expanded view">
   </div>
 <script>
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = lightbox.querySelector('img');
-  const galleryImages = document.querySelectorAll('.gallery img');
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = lightbox.querySelector('img');
+const galleryImages = document.querySelectorAll('.gallery img');
+const gallery = document.querySelector('.gallery');
 
-  galleryImages.forEach(img => {
-    img.addEventListener('click', () => {
-      lightboxImg.src = img.src;
-      lightbox.classList.add('show');
-    });
+galleryImages.forEach(img => {
+  img.addEventListener('click', () => {
+    lightboxImg.src = img.src;
+    lightbox.classList.add('show');
   });
+});
 
-  lightbox.addEventListener('click', () => {
-    lightbox.classList.remove('show');
-  });
+lightbox.addEventListener('click', () => {
+  lightbox.classList.remove('show');
+});
+
+// Fade in whole gallery after all images load
+let imagesLoaded = 0;
+const totalImages = galleryImages.length;
+
+galleryImages.forEach(img => {
+  if (img.complete) {
+    imageLoaded();
+  } else {
+    img.addEventListener('load', imageLoaded);
+    img.addEventListener('error', imageLoaded); // in case image fails to load
+  }
+});
+
+function imageLoaded() {
+  imagesLoaded++;
+  if (imagesLoaded === totalImages) {
+    gallery.classList.add('show');
+  }
+}
+
 </script>
 </body>
 </html>
