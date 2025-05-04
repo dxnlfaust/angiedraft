@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Photography Showcase</title>
+  <style>
+body {
+  margin: 0;
+  background: #000;
+  font-family: Arial, sans-serif;
+  color: white;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+    align-self: flex-start;
+  width: 100%;
+  padding: 0 20px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+    padding-top: 20px;
+      letter-spacing: 0.2em; /* added for all text */
+
+}
+
+.header .left {
+  text-align: left;
+}
+
+.header .right {
+  text-align: right;
+}
+
+
+.overlay {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+    width: 100%;
+  max-width: 1040px;
+  z-index: 1000;
+  pointer-events: none;
+}
+      
+.overlay .header, .overlay a {
+  pointer-events: auto;
+}
+
+
+    .top-overlay {
+      top: 0;
+      height: 30%;
+      background: linear-gradient(to bottom, black 20%, rgba(0,0,0,0) 100%);
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .bottom-overlay {
+      bottom: 0;
+      height: 30%;
+      background: linear-gradient(to top, black 20%, rgba(0,0,0,0) 100%);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 20px;
+      font-size: 8px;
+      font-weight: bold;
+    }
+
+    .bottom-overlay a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 8px;
+          letter-spacing: 0.05em; /* added for all text */
+
+    }
+
+.gallery {
+  column-count: 3;
+  column-gap: 4px;
+  max-width: 1000px;
+  margin: 0 auto;
+  margin-top: 40px
+}
+
+.gallery img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: 4px;
+}
+
+
+@media (max-width: 768px) {
+  .gallery {
+    column-count: 2;
+  }
+}
+
+
+  .lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .lightbox.show {
+    display: flex;
+    opacity: 1;
+  }
+
+  .lightbox img {
+    max-width: 90%;
+    max-height: 90%;
+    animation: fadeIn 0.4s ease;
+  }
+
+  @keyframes fadeIn {
+    from { transform: scale(1); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="overlay top-overlay">
+  <div class="header">
+    <span class="left">CIELO</span>
+    <span class="right">STUDIO</span>
+  </div>
+</div>
+
+
+  <div class="overlay bottom-overlay">
+    <a href="#">home</a>
+    <a href="#">about</a>
+    <a href="#">contact</a>
+  </div>
+
+  <div class="gallery">
+    <!-- Automatically insert 20 images -->
+    <!-- You can copy-paste more or use backend to generate this loop -->
+    <img src="images/1.png" alt="Photo 1">
+    <img src="images/2.png" alt="Photo 2">
+    <img src="images/3.png" alt="Photo 3">
+    <img src="images/4.png" alt="Photo 4">
+    <img src="images/5.png" alt="Photo 5">
+    <img src="images/6.png" alt="Photo 6">
+    <img src="images/7.png" alt="Photo 7">
+    <img src="images/8.png" alt="Photo 8">
+    <img src="images/9.png" alt="Photo 9">
+    <img src="images/10.png" alt="Photo 10">
+    <img src="images/11.png" alt="Photo 11">
+    <img src="images/12.png" alt="Photo 12">
+    <img src="images/13.png" alt="Photo 13">
+    <img src="images/14.png" alt="Photo 14">
+    <img src="images/15.png" alt="Photo 15">
+    <img src="images/16.png" alt="Photo 16">
+    <img src="images/17.png" alt="Photo 17">
+    <img src="images/18.png" alt="Photo 18">
+    <img src="images/19.png" alt="Photo 19">
+    <img src="images/20.png" alt="Photo 20">
+  </div>
+
+  <div class="lightbox" id="lightbox">
+    <img src="" alt="Expanded view">
+  </div>
+<script>
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = lightbox.querySelector('img');
+  const galleryImages = document.querySelectorAll('.gallery img');
+
+  galleryImages.forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src;
+      lightbox.classList.add('show');
+    });
+  });
+
+  lightbox.addEventListener('click', () => {
+    lightbox.classList.remove('show');
+  });
+</script>
+</body>
+</html>
